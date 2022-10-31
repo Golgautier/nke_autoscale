@@ -1,0 +1,4 @@
+script/secret
+script/config
+deployment.private
+__pycache__

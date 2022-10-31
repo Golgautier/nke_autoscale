@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nke-autoscale-configmap
+data:
+  configfile: |
+    [Main]
+    poolfrequency = 10
+    nke_cluster = <name of your NKE cluster>
+    cpu_high_limit = 80
+    cpu_low_limit = 20
+    ram_high_limit = 80
+    ram_low_limit = 20
+    pods_high_limit = 95
+    pods_low_limit = 10
+    occurences = 3
+    min_nodenumber = 1
+    max_nodenumber = 5
+    node_pool = 
+    wait_after_scaleout = 300   
+    check_ssl = True
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: autoscale-secret
+type: Opaque
+data:
+  username: <PC username>      # Base64 encoded
+  password: <PC password>      # Base64 encoded
+  endpoint: <PC IP or FQDN>    # Base64 encoded
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nke-autoscale
+  labels:
+    app: nke-autoscale
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nke-autoscale
+  template:
+    metadata:
+      labels:
+        app: nke-autoscale
+    spec:
+      containers:
+        - image: gautierleblanc/nke_autoscale:0.9
+          imagePullPolicy: Always
+          name: nke-autoscale
+          volumeMounts:
+            - name: config
+              mountPath: /autoscale/config
+            - name: secret
+              mountPath: /autoscale/secret
+      volumes:
+        - name: config
+          configMap:
+            name: nke-autoscale-configmap
+            items:
+            - key: configfile
+              path: config.ini
+        - name: secret
+          secret:
+            secretName: autoscale-secret
+            optional: false
