@@ -10,7 +10,7 @@ It can be run on the NKE cluster itself, or on another cluster, targeting the (u
 
 # Principle
 
-nke_autoscale image embed a python script that will monitor a unique NKE cluster.
+nke_autoscale image embed a golang binary that will monitor a unique NKE cluster.
 When resources are insufficient, it launches nodes add-on (one per one) on the cluster, to get a proper situation.
 When available resources are too high, it launches cluster scale-in to remove useless nodes (node per node too)
 All triggers are customizable (see "usage") through secret and a configmap.
@@ -47,7 +47,7 @@ Set the 3 secrets values (base64 encoded), for Prism Central Username, Prism Cen
 
 ## Execute
 
-Launch the app with command in the namespace of your choice
+Launch the app with this command in the namespace of your choice
 
     kubectl apply -f autoscale.yaml -n <namespace>
 

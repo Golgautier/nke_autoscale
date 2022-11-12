@@ -47,14 +47,14 @@ spec:
         app: nke-autoscale
     spec:
       containers:
-        - image: gautierleblanc/nke_autoscale:0.9
+        - image: gautierleblanc/nke_autoscale:0.9.1
           imagePullPolicy: Always
           name: nke-autoscale
           volumeMounts:
             - name: config
-              mountPath: /autoscale/config
+              mountPath: /config
             - name: secret
-              mountPath: /autoscale/secret
+              mountPath: /secret
       volumes:
         - name: config
           configMap:
