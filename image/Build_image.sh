@@ -6,8 +6,21 @@ then
     exit 2
 fi
 
-cp ../script/autoscale.py ./script/
-cp ../script/myfunctions.py ./script/
-cp ../script/requirements.txt ./script/
+DIR=`pwd`
 
+# Clean (if previous execution failed)
+rm -rf script/ 2>/dev/null
+mkdir script 2>/dev/null
+
+# Get 
+cp ../script/go.mod script/
+cp ../script/*.go script/
+cp ../script/go.sum script/
+cp -r ../script/ntnx_api_call script/
+
+# Create image
 podman build . -t $1
+
+# Clean
+rm -rf script/ 2>/dev/null
+mkdir script 2>/dev/null

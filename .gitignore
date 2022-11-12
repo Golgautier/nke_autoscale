@@ -2,3 +2,6 @@ script/secret
 script/config
 deployment.private
 __pycache__
+ntnx-secret*
+script/kubeconfig.yaml
+deployment.private/
