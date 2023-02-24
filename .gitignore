@@ -5,3 +5,5 @@ __pycache__
 ntnx-secret*
 script/kubeconfig.yaml
 deployment.private/
+script/ntnx-secret.deactivated/cert
+script/ntnx-secret.deactivated/endpoint
