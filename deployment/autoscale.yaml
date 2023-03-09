@@ -47,7 +47,7 @@ spec:
         app: nke-autoscale
     spec:
       containers:
-        - image: gautierleblanc/nke_autoscale:0.9.2
+        - image: gautierleblanc/nke_autoscale:0.9.2.1
           imagePullPolicy: Always
           name: nke-autoscale
           volumeMounts:
